@@ -1,0 +1,19 @@
+﻿<PageTitle>Counter</PageTitle>
+
+<h1>Counter</h1>
+
+<RadzenButton ButtonStyle="ButtonStyle.Primary" Click="IncrementCount">
+    Click me
+    <RadzenBadge Variant="Variant.Outlined" BadgeStyle="BadgeStyle.Light" class="rz-ml-2" >
+        @currentCount
+    </RadzenBadge>
+</RadzenButton>
+
+@code {
+    private int currentCount = 0;
+
+    private void IncrementCount()
+    {
+        currentCount++;
+    }
+}

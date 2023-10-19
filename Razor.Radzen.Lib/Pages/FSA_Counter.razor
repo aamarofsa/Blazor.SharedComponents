@@ -1,4 +1,6 @@
-﻿<PageTitle>Counter</PageTitle>
+﻿@inherits CounterBase
+
+<PageTitle>Counter</PageTitle>
 
 <h1>Counter</h1>
 
@@ -8,12 +10,3 @@
         @currentCount
     </RadzenBadge>
 </RadzenButton>
-
-@code {
-    private int currentCount = 0;
-
-    private void IncrementCount()
-    {
-        currentCount++;
-    }
-}

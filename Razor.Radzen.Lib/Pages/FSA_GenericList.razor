@@ -59,15 +59,17 @@ else
                                               Width="@column.Width" />
                     }
 
-                    <RadzenDataGridColumn TItem="TItem" Context="item" Filterable="false" Sortable="false" Pickable="false" TextAlign="TextAlign.Right" Width="156px">
-                        <Template Context="item">
-                            <RadzenButton Icon="edit" ButtonStyle="ButtonStyle.Warning" Variant="Variant.Filled" Shade="Shade.Lighter" Size="ButtonSize.Small" Click="@(args => EditRow(item))" @onclick:stopPropagation="true">
-                            </RadzenButton>
-                            <RadzenButton ButtonStyle="ButtonStyle.Danger" Icon="delete" Variant="Variant.Filled" Shade="Shade.Lighter" Size="ButtonSize.Small" class="my-1 ms-1" Click="@(args => DeleteRow(item))" @onclick:stopPropagation="true">
-                            </RadzenButton>
-                        </Template>
-                    </RadzenDataGridColumn>
-
+                    @if (GenericData.AllowActions)
+                    {
+                        <RadzenDataGridColumn TItem="TItem" Context="item" Filterable="false" Sortable="false" Pickable="false" TextAlign="TextAlign.Right" Width="156px">
+                            <Template Context="item">
+                                <RadzenButton Icon="edit" ButtonStyle="ButtonStyle.Warning" Variant="Variant.Filled" Shade="Shade.Lighter" Size="ButtonSize.ExtraSmall" Click="@(args => EditRow(item))" @onclick:stopPropagation="true">
+                                </RadzenButton>
+                                <RadzenButton ButtonStyle="ButtonStyle.Danger" Icon="delete" Variant="Variant.Filled" Shade="Shade.Lighter" Size="ButtonSize.ExtraSmall" Click="@(args => DeleteRow(item))" @onclick:stopPropagation="true">
+                                </RadzenButton>
+                            </Template>
+                        </RadzenDataGridColumn>
+                    }
                 </Columns>
 
             </RadzenDataGrid>

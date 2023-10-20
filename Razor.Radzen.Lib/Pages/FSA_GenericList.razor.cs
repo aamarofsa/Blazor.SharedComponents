@@ -7,13 +7,12 @@ public partial class FSA_GenericList<TItem>
 
     async Task EditRow(TItem item)
     {
-        // orderToUpdate = order;
-        // await ordersGrid.EditRow(order);
+        ReturnToAction.InvokeAsync(("edit", item));
     }
 
     async Task DeleteRow(TItem item)
     {
-        ReturnToAction.InvokeAsync(item);
+        ReturnToAction.InvokeAsync(("delete", item));
     }
 
     public void Export(string type)

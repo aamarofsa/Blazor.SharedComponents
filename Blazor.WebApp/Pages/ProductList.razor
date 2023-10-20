@@ -3,7 +3,7 @@
 
 <PageTitle>Products List</PageTitle>
 
-<FSA_GenericList @ref=MyGrid Items="Products" GenericData="GenericListData" ReturnToAction="ReturnToAction" />
+<FSA_GenericList @ref=MyGrid Items="Products" GenericData="GenericListData" ReturnToAction="@((args)=> ReturnToAction(args.Item1, args.Item2))" />
 
 @code {
     private FSA_GenericList<Product> MyGrid;
@@ -89,13 +89,14 @@
         };
 
         GenericListData = new GenericListData()
-        {
+            {
                 SelectionMode = SelectionMode.Single,
                 AllowMultiColumnSorting = false,
                 AllowFiltering = true,
                 AllowAlternatingRows = true,
                 AllowPaging = true,
                 PageSize = 10,
+                AllowActions = false,
                 DataColumns = new List<DataColumn>
                 {
                     new DataColumn
@@ -118,13 +119,21 @@
         };
     }
 
-    public void ReturnToAction(Object item)
+    public void ReturnToAction(string action, Object item)
     {
         try
         {
-            var product = item as Product;
+            if (action == "delete")
+            {
+                var product = item as Product;
+                Products.Remove(product);
 
-            Products.Remove(product);
+                Console.WriteLine(action);
+            }
+            if (action == "edit")
+            {
+                Console.WriteLine(action);
+            }
 
             MyGrid.MyGrid.Reload();
         }

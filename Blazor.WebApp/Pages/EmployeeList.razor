@@ -3,7 +3,7 @@
 
 <PageTitle>Employees List</PageTitle>
 
-<FSA_GenericList @ref=MyGrid Items="Employess" GenericData="GenericListData" ReturnToAction="ReturnToAction" />
+<FSA_GenericList @ref=MyGrid Items="Employess" GenericData="GenericListData" ReturnToAction="@((args)=> ReturnToAction(args.Item1, args.Item2))" />
 
 @code {
     private FSA_GenericList<Employee> MyGrid;
@@ -104,13 +104,22 @@
         };
     }
 
-    public void ReturnToAction(Object item)
+    public void ReturnToAction(string action, Object item)
     {
         try
         {
-            var employee = item as Employee;
-            Employess.Remove(employee);
+            if (action == "delete")
+            {
+                var employee = item as Employee;
+                Employess.Remove(employee);
 
+                Console.WriteLine(action);
+            }
+            if (action == "edit")
+            {
+                Console.WriteLine(action);
+            }
+            
             MyGrid.MyGrid.Reload();
         }
         catch (Exception)

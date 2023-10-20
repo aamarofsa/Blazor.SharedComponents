@@ -14,6 +14,7 @@
         public bool AllowGrouping { get; set; } = true;
         public bool AllowColumnPicking { get; set; } = true;
         public DataDensity Density { get; set; } = DataDensity.Compact;
+        public bool AllowActions { get; set; } = true;
         public List<DataColumn> DataColumns { get; set; } = new List<DataColumn>();
     }
 

@@ -1,45 +1,78 @@
 ﻿@typeparam TItem
-
-@using Base.Models;
+@using Base.ComponentImplementations;
+@inherits GenericDataGridBase<TItem>
+@using Base.Models
 
 @if (Items is null)
 {
     <h3>Loading...</h3>
 }
-else if (Items.Count == 0)
-{
-    <h3>No Items to show...</h3>
-}
 else
 {
-    <RadzenDataGrid Data="@(Items)" TItem="TItem"
-                    AllowFiltering="@GenericData.AllowFiltering" FilterMode="FilterMode.Advanced" LogicalFilterOperator="LogicalFilterOperator.Or"
-                    AllowPaging="@GenericData.AllowPaging" PageSize="@GenericData.PageSize" PagerHorizontalAlign="HorizontalAlign.Left" ShowPagingSummary="true"
-                    AllowSorting="@GenericData.AllowSorting"
-                    AllowColumnResize="@GenericData.AllowColumnResize"
-                    AllowAlternatingRows="@GenericData.AllowAlternatingRows">
-        <Columns>
-            @foreach (DataColumn column in GenericData.DataColumns)
-            {
-                <RadzenDataGridColumn TItem="TItem"
-                                      Property="@column.Property"
-                                      Sortable="@column.Sortable"
-                                      Filterable="@column.Filterable"
-                                      Title="@column.Title"
-                                      Visible="@column.Visible" />
-            }
-        </Columns>
-    </RadzenDataGrid>
-}
+    <RadzenRow>
 
-@code {
-    [Parameter]
-    [EditorRequired]
-    public IList<TItem> Items { get; set; } = default;
+        <RadzenColumn Size="12">
+            <RadzenButton Text="Export XLS" Icon="grid_on" Click="@(args => Export("excel"))" ButtonStyle="ButtonStyle.Info" Variant="Variant.Filled" Shade="Shade.Lighter" Size="ButtonSize.Small" />
+        </RadzenColumn>
 
-    [Parameter]
-    [EditorRequired]
-    public GenericListData GenericData { get; set; } = new();
+        <RadzenColumn Size="12">
+            <RadzenDataGrid @ref=MyGrid Data="@Items" Density="@(GenericData.Density == DataDensity.Compact ? Density.Compact : Density.Default)"
+                            SelectionMode="@(GenericData.SelectionMode == SelectionMode.Multiple ? DataGridSelectionMode.Multiple : DataGridSelectionMode.Single)" @bind-Value=@selectedItems
+                            AllowFiltering="@GenericData.AllowFiltering" FilterMode="FilterMode.Advanced" LogicalFilterOperator="LogicalFilterOperator.Or"
+                            AllowPaging="@GenericData.AllowPaging" PageSize="@GenericData.PageSize" PagerHorizontalAlign="HorizontalAlign.Left" ShowPagingSummary="true"
+                            AllowSorting="@GenericData.AllowSorting" AllowMultiColumnSorting="@GenericData.AllowMultiColumnSorting" ShowMultiColumnSortingIndex="@GenericData.AllowMultiColumnSorting"
+                            AllowColumnReorder="@GenericData.AllowColumnReorder"
+                            AllowGrouping="@GenericData.AllowGrouping"
+                            AllowColumnPicking="@GenericData.AllowColumnPicking"
+                            AllowColumnResize="@GenericData.AllowColumnResize"
+                            AllowAlternatingRows="@GenericData.AllowAlternatingRows">
+                <EmptyTemplate>
+                    <p style="color: lightgrey; font-size: 24px; text-align: center; margin: 2rem;">No records to display.</p>
+                </EmptyTemplate>
+                <Columns>
+                    @if (GenericData.SelectionMode == SelectionMode.Multiple)
+                    {
+                        <RadzenDataGridColumn TItem="TItem" Width="60px" Frozen="true" Sortable="false" Filterable="false" Reorderable="false" Pickable="false" Groupable="false">
+                            <HeaderTemplate>
+                                <RadzenCheckBox TriState="false" TValue="bool?"
+                                                Value="@(selectedItems == null || selectedItems?.Any() != true ? false : !Items.All(i => selectedItems.Contains(i)) ? null : Items.Any(i => selectedItems.Contains(i)))"
+                                                Change="@(args => selectedItems = args == true ? Items.ToList() : null)" />
+                            </HeaderTemplate>
+                            <Template Context="data">
+                                <RadzenCheckBox TriState="false" Value="@(selectedItems != null && selectedItems.Contains(data))"
+                                                TValue="bool" Change=@(args => { if(!allowRowSelectOnRowClick) { MyGrid.SelectRow(data); }}) />
+                            </Template>
+                        </RadzenDataGridColumn>
+                    }
+                    @foreach (DataColumn column in GenericData.DataColumns)
+                    {
+                        <RadzenDataGridColumn TItem="TItem"
+                                              Property="@column.Property"
+                                              Sortable="@column.Sortable"
+                                              Filterable="@column.Filterable"
+                                              Pickable="@column.Pickable"
+                                              Groupable="@column.Groupable"
+                                              Frozen="@column.Frozen"
+                                              Reorderable="@column.Frozen"
+                                              Title="@column.Title"
+                                              Visible="@column.Visible"
+                                              Width="@column.Width" />
+                    }
+
+                    <RadzenDataGridColumn TItem="TItem" Context="item" Filterable="false" Sortable="false" Pickable="false" TextAlign="TextAlign.Right" Width="156px">
+                        <Template Context="item">
+                            <RadzenButton Icon="edit" ButtonStyle="ButtonStyle.Warning" Variant="Variant.Filled" Shade="Shade.Lighter" Size="ButtonSize.Small" Click="@(args => EditRow(item))" @onclick:stopPropagation="true">
+                            </RadzenButton>
+                            <RadzenButton ButtonStyle="ButtonStyle.Danger" Icon="delete" Variant="Variant.Filled" Shade="Shade.Lighter" Size="ButtonSize.Small" class="my-1 ms-1" Click="@(args => DeleteRow(item))" @onclick:stopPropagation="true">
+                            </RadzenButton>
+                        </Template>
+                    </RadzenDataGridColumn>
+
+                </Columns>
+
+            </RadzenDataGrid>
+        </RadzenColumn>
+    </RadzenRow>
 }
 
 

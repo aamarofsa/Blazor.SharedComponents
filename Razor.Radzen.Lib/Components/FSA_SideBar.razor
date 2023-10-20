@@ -1,0 +1,14 @@
+﻿<RadzenSidebar Style="width:auto; box-shadow: var(--rz-header-shadow)">
+    <RadzenPanelMenu DisplayStyle="@(Expanded ? MenuItemDisplayStyle.IconAndText : MenuItemDisplayStyle.Icon)" ShowArrow=false>
+        <RadzenPanelMenuItem Text="Home" Icon="home" Path="" />
+        <RadzenPanelMenuItem Text="Counter" Icon="add" Path="counter" />
+        <RadzenPanelMenuItem Text="Employess" Icon="list" Path="employee-list" />
+        <RadzenPanelMenuItem Text="Products" Icon="list" Path="product-list" />
+    </RadzenPanelMenu>
+</RadzenSidebar>
+
+@code {
+    [Parameter]
+    [EditorRequired]
+    public bool Expanded { get; set; } = true;
+}

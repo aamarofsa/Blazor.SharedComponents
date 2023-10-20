@@ -1,11 +1,13 @@
 ﻿@page "/product-list"
 @using Base.Models;
 
-<PageTitle>Employee List</PageTitle>
+<PageTitle>Products List</PageTitle>
 
-<FSA_GenericList Items="Products" GenericData="GenericListData" />
+<FSA_GenericList @ref=MyGrid Items="Products" GenericData="GenericListData" ReturnToAction="ReturnToAction" />
 
 @code {
+    private FSA_GenericList<Product> MyGrid;
+
     private List<Product>? Products { get; set; } = new();
 
     private GenericListData GenericListData { get; set; } = new();
@@ -88,10 +90,12 @@
 
         GenericListData = new GenericListData()
         {
+                SelectionMode = SelectionMode.Single,
+                AllowMultiColumnSorting = false,
                 AllowFiltering = true,
                 AllowAlternatingRows = true,
                 AllowPaging = true,
-                PageSize = 5,
+                PageSize = 10,
                 DataColumns = new List<DataColumn>
                 {
                     new DataColumn
@@ -99,6 +103,9 @@
                         Property = nameof(Product.Id),
                         Title = "ID",
                         Sortable = true,
+                        Pickable = false,
+                        Frozen = true,
+                        Width = "80px",
                     },
                     new DataColumn
                     {
@@ -109,5 +116,20 @@
                     }
                 },
         };
+    }
+
+    public void ReturnToAction(Object item)
+    {
+        try
+        {
+            var product = item as Product;
+
+            Products.Remove(product);
+
+            MyGrid.MyGrid.Reload();
+        }
+        catch (Exception)
+        {
+        }
     }
 }

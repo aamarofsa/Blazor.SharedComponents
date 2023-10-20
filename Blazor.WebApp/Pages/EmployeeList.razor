@@ -1,11 +1,13 @@
 ﻿@page "/employee-list"
 @using Base.Models;
 
-<PageTitle>Employee List</PageTitle>
+<PageTitle>Employees List</PageTitle>
 
-<FSA_GenericList Items="Employess" GenericData="GenericListData" />
+<FSA_GenericList @ref=MyGrid Items="Employess" GenericData="GenericListData" ReturnToAction="ReturnToAction" />
 
 @code {
+    private FSA_GenericList<Employee> MyGrid;
+
     private List<Employee>? Employess { get; set; } = new();
 
     private GenericListData GenericListData { get; set; } = new();
@@ -42,10 +44,25 @@
                 LastName = "E. Mirabal",
                 Age = 8
             },
+            new Employee
+            {
+                Id = 5,
+                Name = "Juan",
+                LastName = "Perez",
+                Age = 8
+            },
+            new Employee
+            {
+                Id = 6,
+                Name = "José",
+                LastName = "Fernandez",
+                Age = 8
+            },
         };
 
         GenericListData = new GenericListData()
         {
+                SelectionMode = SelectionMode.Multiple,
                 AllowFiltering = true,
                 AllowAlternatingRows = true,
                 AllowPaging = true,
@@ -57,6 +74,9 @@
                         Property = nameof(Employee.Id),
                         Title = "ID",
                         Sortable = true,
+                        Pickable = false,
+                        Frozen = true,
+                        Width = "80px",
                     },
                     new DataColumn
                     {
@@ -78,8 +98,23 @@
                         Title = "AGE",
                         Filterable = true,
                         Sortable = true,
+                        Visible = false
                     },
                 },
         };
+    }
+
+    public void ReturnToAction(Object item)
+    {
+        try
+        {
+            var employee = item as Employee;
+            Employess.Remove(employee);
+
+            MyGrid.MyGrid.Reload();
+        }
+        catch (Exception)
+        {
+        }
     }
 }

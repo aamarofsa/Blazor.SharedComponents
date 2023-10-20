@@ -1,0 +1,85 @@
+﻿@page "/employee-list"
+@using Base.Models;
+
+<PageTitle>Employee List</PageTitle>
+
+<FSA_GenericList Items="Employess" GenericData="GenericListData" />
+
+@code {
+    private List<Employee>? Employess { get; set; } = new();
+
+    private GenericListData GenericListData { get; set; } = new();
+
+    protected override async Task OnInitializedAsync()
+    {
+        Employess = new List<Employee>
+        {
+            new Employee
+            {
+                Id = 1,
+                Name = "Alexis",
+                LastName = "Amaro",
+                Age = 38
+            },
+            new Employee
+            {
+                Id = 2,
+                Name = "Adrian",
+                LastName = "Amaro",
+                Age = 32
+            },
+            new Employee
+            {
+                Id = 3,
+                Name = "Yiliana",
+                LastName = "Mirabal",
+                Age = 35
+            },
+            new Employee
+            {
+                Id = 4,
+                Name = "Sofia",
+                LastName = "E. Mirabal",
+                Age = 8
+            },
+        };
+
+        GenericListData = new GenericListData()
+        {
+                AllowFiltering = true,
+                AllowAlternatingRows = true,
+                AllowPaging = true,
+                PageSize = 10,
+                DataColumns = new List<DataColumn>
+                {
+                    new DataColumn
+                    {
+                        Property = nameof(Employee.Id),
+                        Title = "ID",
+                        Sortable = true,
+                    },
+                    new DataColumn
+                    {
+                        Property = nameof(Employee.Name),
+                        Title = "NAME",
+                        Filterable = true,
+                        Sortable = true,
+                    },
+                    new DataColumn
+                    {
+                        Property = nameof(Employee.LastName),
+                        Title = "LAST NAME",
+                        Filterable = true,
+                        Sortable = true,
+                    },
+                    new DataColumn
+                    {
+                        Property = nameof(Employee.Age),
+                        Title = "AGE",
+                        Filterable = true,
+                        Sortable = true,
+                    },
+                },
+        };
+    }
+}

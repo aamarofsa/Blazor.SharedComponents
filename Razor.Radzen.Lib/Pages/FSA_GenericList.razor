@@ -1,0 +1,45 @@
+﻿@typeparam TItem
+
+@using Base.Models;
+
+@if (Items is null)
+{
+    <h3>Loading...</h3>
+}
+else if (Items.Count == 0)
+{
+    <h3>No Items to show...</h3>
+}
+else
+{
+    <RadzenDataGrid Data="@(Items)" TItem="TItem"
+                    AllowFiltering="@GenericData.AllowFiltering" FilterMode="FilterMode.Advanced" LogicalFilterOperator="LogicalFilterOperator.Or"
+                    AllowPaging="@GenericData.AllowPaging" PageSize="@GenericData.PageSize" PagerHorizontalAlign="HorizontalAlign.Left" ShowPagingSummary="true"
+                    AllowSorting="@GenericData.AllowSorting"
+                    AllowColumnResize="@GenericData.AllowColumnResize"
+                    AllowAlternatingRows="@GenericData.AllowAlternatingRows">
+        <Columns>
+            @foreach (DataColumn column in GenericData.DataColumns)
+            {
+                <RadzenDataGridColumn TItem="TItem"
+                                      Property="@column.Property"
+                                      Sortable="@column.Sortable"
+                                      Filterable="@column.Filterable"
+                                      Title="@column.Title"
+                                      Visible="@column.Visible" />
+            }
+        </Columns>
+    </RadzenDataGrid>
+}
+
+@code {
+    [Parameter]
+    [EditorRequired]
+    public IList<TItem> Items { get; set; } = default;
+
+    [Parameter]
+    [EditorRequired]
+    public GenericListData GenericData { get; set; } = new();
+}
+
+

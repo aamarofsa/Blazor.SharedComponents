@@ -1,0 +1,113 @@
+﻿@page "/product-list"
+@using Base.Models;
+
+<PageTitle>Employee List</PageTitle>
+
+<FSA_GenericList Items="Products" GenericData="GenericListData" />
+
+@code {
+    private List<Product>? Products { get; set; } = new();
+
+    private GenericListData GenericListData { get; set; } = new();
+
+    protected override async Task OnInitializedAsync()
+    {
+        Products = new List<Product>
+        {
+            new Product
+            {
+                Id = 1,
+                Name = "Pan",
+            },
+            new Product
+            {
+                Id = 2,
+                Name = "Papas",
+            },
+            new Product
+            {
+                Id = 3,
+                Name = "Frijoles",
+            },
+            new Product
+            {
+                Id = 4,
+                Name = "Azucar",
+            },
+            new Product
+            {
+                Id = 5,
+                Name = "Sal",
+            },
+            new Product
+            {
+                Id = 6,
+                Name = "Coco",
+            },
+            new Product
+            {
+                Id = 7,
+                Name = "Aceite",
+            },
+            new Product
+            {
+                Id = 8,
+                Name = "Tomates",
+            },
+            new Product
+            {
+                Id = 9,
+                Name = "Pescado",
+            },
+            new Product
+            {
+                Id = 10,
+                Name = "Jamón",
+            },
+            new Product
+            {
+                Id = 11,
+                Name = "Pollo",
+            },
+            new Product
+            {
+                Id = 12,
+                Name = "Chicharo",
+            },
+            new Product
+            {
+                Id = 13,
+                Name = "Vinagre",
+            },
+            new Product
+            {
+                Id = 14,
+                Name = "Huevos",
+            },
+        };
+
+        GenericListData = new GenericListData()
+        {
+                AllowFiltering = true,
+                AllowAlternatingRows = true,
+                AllowPaging = true,
+                PageSize = 5,
+                DataColumns = new List<DataColumn>
+                {
+                    new DataColumn
+                    {
+                        Property = nameof(Product.Id),
+                        Title = "ID",
+                        Sortable = true,
+                    },
+                    new DataColumn
+                    {
+                        Property = nameof(Product.Name),
+                        Title = "PRODUCT NAME",
+                        Filterable = true,
+                        Sortable = true,
+                    }
+                },
+        };
+    }
+}

@@ -9,7 +9,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Razor.Radzen.Lib", "Razor.R
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Razor.FluentUI.Lib", "Razor.FluentUI.Lib\Razor.FluentUI.Lib.csproj", "{4ADBE2E2-8A93-4D93-A5DB-82E4AD2AFD9A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Base", "Base\Base.csproj", "{96E4AED6-D68A-44B2-A088-68DCE8C29F91}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Base", "Base\Base.csproj", "{96E4AED6-D68A-44B2-A088-68DCE8C29F91}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

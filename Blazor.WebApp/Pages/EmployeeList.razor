@@ -15,55 +15,12 @@
 
     protected override async Task OnInitializedAsync()
     {
-        Employess = new List<Employee>
-        {
-            new Employee
-            {
-                Id = 1,
-                Name = "Alexis",
-                LastName = "Amaro",
-                Age = 38
-            },
-            new Employee
-            {
-                Id = 2,
-                Name = "Adrian",
-                LastName = "Amaro",
-                Age = 32
-            },
-            new Employee
-            {
-                Id = 3,
-                Name = "Yiliana",
-                LastName = "Mirabal",
-                Age = 35
-            },
-            new Employee
-            {
-                Id = 4,
-                Name = "Sofia",
-                LastName = "E. Mirabal",
-                Age = 8
-            },
-            new Employee
-            {
-                Id = 5,
-                Name = "Juan",
-                LastName = "Perez",
-                Age = 8
-            },
-            new Employee
-            {
-                Id = 6,
-                Name = "José",
-                LastName = "Fernandez",
-                Age = 8
-            },
-        };
+        Employess = await GetEmployess();
 
         GenericListData = new GenericListData()
         {
                 SelectionMode = SelectionMode.Multiple,
+                AllowVirtualization = true,
                 AllowFiltering = true,
                 AllowAlternatingRows = true,
                 AllowPaging = true,
@@ -105,5 +62,33 @@
         };
     }
 
-    
+    private static readonly string[] Names = new[]
+    {
+        "Alexis", "Yiliana", "Adrian", "Sofia", "Jose", "Pedro", "Juan", "Maria", "Roberto", "Jhon"
+    };
+
+    private static readonly string[] LastNames = new[]
+    {
+        "Amaro", "Mirabal", "Perez", "Martinez", "Oquendo", "Mc Milliam", "Balmy", "Torres", "Sweltering", "Scorching"
+    };
+
+    private async Task<List<Employee>> GetEmployess()
+    {
+        try
+        {
+            return Enumerable.Range(1, 120).Select(index => new Employee
+                {
+                    Id = index,
+                    Name = Names[Random.Shared.Next(Names.Length)],
+                    LastName = LastNames[Random.Shared.Next(LastNames.Length)],
+                    Age = Random.Shared.Next(18, 55)
+                })
+        .ToList();
+        }
+        catch (Exception)
+        {
+            await Task.Delay(1);
+            return new();
+        }
+    }
 }

@@ -16,6 +16,6 @@ namespace Base.ComponentImplementations
         public IList<TItem> selectedItems = default;
 
         [Parameter]
-        public EventCallback<(string, Object)> ReturnToAction { get; set; }
+        public EventCallback<(object, object)> ReturnToAction { get; set; }
     }
 }

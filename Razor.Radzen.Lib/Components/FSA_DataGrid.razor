@@ -1,7 +1,6 @@
-﻿@typeparam TItem
-@using Base.ComponentImplementations;
+﻿
+@typeparam TItem
 @inherits GenericDataGridBase<TItem>
-@using Base.Models
 
 @if (Items is null)
 {
@@ -16,10 +15,11 @@ else
         </RadzenColumn>
 
         <RadzenColumn Size="12">
-            <RadzenDataGrid @ref=MyGrid Data="@Items" Density="@(GenericData.Density == DataDensity.Compact ? Density.Compact : Density.Default)"
+            <RadzenDataGrid @ref=DataGrid Data="@Items" Density="@(GenericData.Density == DataDensity.Compact ? Density.Compact : Density.Default)"
+                            AllowVirtualization="@GenericData.AllowVirtualization" Style="max-height:80vh"
                             SelectionMode="@(GenericData.SelectionMode == SelectionMode.Multiple ? DataGridSelectionMode.Multiple : DataGridSelectionMode.Single)" @bind-Value=@selectedItems
                             AllowFiltering="@GenericData.AllowFiltering" FilterMode="FilterMode.Advanced" LogicalFilterOperator="LogicalFilterOperator.Or"
-                            AllowPaging="@GenericData.AllowPaging" PageSize="@GenericData.PageSize" PagerHorizontalAlign="HorizontalAlign.Left" ShowPagingSummary="true"
+                            AllowPaging="@(@GenericData.AllowVirtualization ? false : GenericData.AllowPaging)" PageSize="@GenericData.PageSize" PagerHorizontalAlign="HorizontalAlign.Left" ShowPagingSummary="true"
                             AllowSorting="@GenericData.AllowSorting" AllowMultiColumnSorting="@GenericData.AllowMultiColumnSorting" ShowMultiColumnSortingIndex="@GenericData.AllowMultiColumnSorting"
                             AllowColumnReorder="@GenericData.AllowColumnReorder"
                             AllowGrouping="@GenericData.AllowGrouping"
@@ -40,7 +40,7 @@ else
                             </HeaderTemplate>
                             <Template Context="data">
                                 <RadzenCheckBox TriState="false" Value="@(selectedItems != null && selectedItems.Contains(data))"
-                                                TValue="bool" Change=@(args => { if(!allowRowSelectOnRowClick) { MyGrid.SelectRow(data); }}) />
+                                                TValue="bool" Change=@(args => { if(!allowRowSelectOnRowClick) { DataGrid.SelectRow(data); }}) />
                             </Template>
                         </RadzenDataGridColumn>
                     }

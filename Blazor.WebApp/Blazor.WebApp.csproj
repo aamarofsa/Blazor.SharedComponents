@@ -12,8 +12,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Razor.FluentUI.Lib\Razor.FluentUI.Lib.csproj" />
-    <ProjectReference Include="..\Razor.Radzen.Lib\Razor.Radzen.Lib.csproj" />
+    <ProjectReference Include="..\Razor.Base\Razor.Base.csproj" />
   </ItemGroup>
 
   <ItemGroup>

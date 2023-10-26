@@ -1,12 +1,13 @@
 ﻿@page "/product-list"
-@using Base.Models;
 
 <PageTitle>Products List</PageTitle>
 
-<FSA_GenericList @ref=MyGrid Items="Products" GenericData="GenericListData" ReturnToAction="@((args)=> ReturnToAction(args.Item1, args.Item2))" />
+<ListWindow @ref=ListWindows
+            Items="Products" 
+            GenericData="GenericListData"/>
 
 @code {
-    private FSA_GenericList<Product> MyGrid;
+    private ListWindow<Product> ListWindows;
 
     private List<Product>? Products { get; set; } = new();
 
@@ -117,28 +118,5 @@
                     }
                 },
         };
-    }
-
-    public void ReturnToAction(string action, Object item)
-    {
-        try
-        {
-            if (action == "delete")
-            {
-                var product = item as Product;
-                Products.Remove(product);
-
-                Console.WriteLine(action);
-            }
-            if (action == "edit")
-            {
-                Console.WriteLine(action);
-            }
-
-            MyGrid.MyGrid.Reload();
-        }
-        catch (Exception)
-        {
-        }
     }
 }

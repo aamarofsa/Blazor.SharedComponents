@@ -1,12 +1,13 @@
 ﻿@page "/employee-list"
-@using Base.Models;
 
 <PageTitle>Employees List</PageTitle>
 
-<FSA_GenericList @ref=MyGrid Items="Employess" GenericData="GenericListData" ReturnToAction="@((args)=> ReturnToAction(args.Item1, args.Item2))" />
+<ListWindow @ref=ListWindows
+            Items="Employess"
+            GenericData="GenericListData" />
 
 @code {
-    private FSA_GenericList<Employee> MyGrid;
+    private ListWindow<Employee> ListWindows { get; set; }
 
     private List<Employee>? Employess { get; set; } = new();
 
@@ -104,26 +105,5 @@
         };
     }
 
-    public void ReturnToAction(string action, Object item)
-    {
-        try
-        {
-            if (action == "delete")
-            {
-                var employee = item as Employee;
-                Employess.Remove(employee);
-
-                Console.WriteLine(action);
-            }
-            if (action == "edit")
-            {
-                Console.WriteLine(action);
-            }
-            
-            MyGrid.MyGrid.Reload();
-        }
-        catch (Exception)
-        {
-        }
-    }
+    
 }

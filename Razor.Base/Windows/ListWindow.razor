@@ -1,0 +1,44 @@
+﻿@typeparam TItem
+
+<FSA_DataGrid @ref=GenericDataGrid
+              Items="Items"
+              GenericData="GenericData"
+              ReturnToAction="@((args) => ExecuteToAction(args.Item1, args.Item2))" />
+
+@code {
+    private FSA_DataGrid<TItem> GenericDataGrid;
+
+    [Parameter]
+    [EditorRequired]
+    public List<TItem> Items { get; set; } = new();
+
+    [Parameter]
+    [EditorRequired]
+    public GenericListData GenericData { get; set; } = new();
+
+    public void ExecuteToAction(object action, object item)
+    {
+        try
+        {
+            switch ((EntityAction)action)
+            {
+                case EntityAction.Remove:
+                    Items.Remove((TItem)item);
+                    break;
+                default:
+                    Console.WriteLine(action);
+                    break;
+            }
+
+            Refresh();
+        }
+        catch (Exception)
+        {
+        }
+    }
+
+    public void Refresh()
+    {
+        GenericDataGrid.Refresh();
+    }
+}

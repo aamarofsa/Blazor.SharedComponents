@@ -3,6 +3,7 @@
     public class GenericListData
     {
         public SelectionMode SelectionMode { get; set; } = SelectionMode.Single;
+        public bool AllowVirtualization { get; set; } = false;
         public bool AllowFiltering { get; set; } = true;
         public bool AllowColumnResize { get; set; } = false;
         public bool AllowAlternatingRows { get; set; } = false;
@@ -44,5 +45,13 @@
     {
         Default,
         Compact
+    }
+
+    public enum EntityAction
+    {
+        Add,
+        Update,
+        Remove,
+        Detail
     }
 }

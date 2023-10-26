@@ -1,4 +1,4 @@
-﻿namespace Base.Models
+﻿namespace Base.Helpers.DataTypes
 {
     public class GenericListData
     {

@@ -1,6 +1,7 @@
-﻿using Base.Models;
+﻿using Base.Helpers.DataTypes;
+using Microsoft.AspNetCore.Components;
 
-namespace Base.ComponentImplementations
+namespace Base.Helpers.ComponentImplementations
 {
     public class GenericDataGridBase<TItem> : ComponentBase
     {

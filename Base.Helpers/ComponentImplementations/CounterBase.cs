@@ -1,4 +1,6 @@
-﻿namespace Base
+﻿using Microsoft.AspNetCore.Components;
+
+namespace Base.Helpers.ComponentImplementations
 {
     public class CounterBase : ComponentBase
     {

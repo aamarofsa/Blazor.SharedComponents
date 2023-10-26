@@ -1,35 +1,37 @@
-using Base.Models;
+using Base.Helpers.DataTypes;
 using Radzen.Blazor;
 
-namespace Razor.Radzen.Lib.Components;
-public partial class FSA_DataGrid<TItem>
+namespace Razor.Radzen.Lib.Components
 {
-    public RadzenDataGrid<TItem> DataGrid { get; set; }
-
-    async Task EditRow(TItem item)
+    public partial class FSA_DataGrid<TItem>
     {
-        ReturnToAction.InvokeAsync((EntityAction.Update, item));
-        //ReturnToAction.InvokeAsync((Actions.Update, item));
-    }
+        public RadzenDataGrid<TItem> DataGrid { get; set; }
 
-    async Task DeleteRow(TItem item)
-    {
-        ReturnToAction.InvokeAsync((EntityAction.Remove, item));
-    }
-
-    public void Export(string type)
-    {
-
-    }
-
-    public void Refresh()
-    {
-        try
+        async Task EditRow(TItem item)
         {
-            DataGrid.Reload();
+            ReturnToAction.InvokeAsync((EntityAction.Update, item));
         }
-        catch (Exception)
+
+        async Task DeleteRow(TItem item)
         {
+            ReturnToAction.InvokeAsync((EntityAction.Remove, item));
+        }
+
+        public void Export(string type)
+        {
+
+        }
+
+        public void Refresh()
+        {
+            try
+            {
+                DataGrid.Reload();
+            }
+            catch (Exception)
+            {
+            }
         }
     }
 }
+
